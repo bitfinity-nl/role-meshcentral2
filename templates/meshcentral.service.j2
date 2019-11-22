@@ -1,0 +1,20 @@
+[Unit]
+Description=MeshCentral Server
+
+[Service]
+Type=simple
+LimitNOFILE=1000000
+ExecStart=/usr/bin/node /opt/meshcentral/node_modules/meshcentral
+WorkingDirectory=/home/meshcentral
+Environment=NODE_ENV=production
+User=root
+Group=root
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+# Set port permissions capability
+Capabilities=cap_net_bind_service+ep
+SecureBits=keep-caps
+
+[Install]
+WantedBy=multi-user.target

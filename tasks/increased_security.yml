@@ -1,0 +1,50 @@
+---
+# Title: role-meshcentral2
+#
+# Author: bitfinity-nl
+# File: tasks/main.yml
+#
+# Description:
+#   Remote Management Server
+
+- name: "Create group meshcentral"
+  group:
+    name: meshcentral
+    state: present
+
+- name: "Create user meshcentral"
+  user:
+    name: meshcentral
+    shell: /sbin/nologin
+    system: yes
+    group: meshcentral
+    state: present
+
+- name: "Create installation folder"
+  file:
+    path: /opt/meshcentral
+    owner: meshcentral
+    group: meshcentral
+    state: directory
+#    mode: '0644'
+
+- name: "Install node.js package meshcentral"
+  npm:
+    name: meshcentral
+    path: /opt/meshcentral
+
+- name: "Make /opt/meshcentral/meshcentral-file writable"
+  file:
+    path: /opt/meshcentral/meshcentral-files
+    owner: meshcentral
+    group: meshcentral
+    mode: 0755
+    recurse: yes
+
+- name: "Builtin Letsencrypt support"
+  file:
+    path: /opt/meshcentral/meshcentral-data/letsencrypt
+    state: directory
+    owner: meshcentral
+    group: meshcentral
+    mode: 0755

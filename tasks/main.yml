@@ -1,0 +1,108 @@
+---
+# Title: role-meshcentral2
+#
+# Author: bitfinity-nl
+# File: tasks/ubt-1804-amd64.yml
+#
+# Description:
+#   Remote Management Server
+
+- name: Enable universe repository
+  apt_repository:
+    repo: "{{ item }}"
+  with_items:
+    - "deb http://archive.ubuntu.com/ubuntu/ bionic universe"
+    - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe"
+    - "deb http://security.ubuntu.com/ubuntu/ bionic-security universe"
+
+- name: "Install packages"
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: present
+  vars:
+    packages:
+    - aptitude
+    - nodejs
+    - npm
+
+- name: "Create group meshcentral"
+  group:
+    name: meshcentral
+    state: present
+
+- name: "Create user meshcentral"
+  user:
+    name: meshcentral
+    shell: /bin/bash
+    system: yes
+    group: meshcentral
+    state: present
+
+- name: "update permissions"
+  file:
+    path: /opt/meshcentral/node_modules
+    owner: meshcentral
+    group: meshcentral
+    state: directory
+    recurse: yes
+    mode: '0775'
+
+- name: "Install node.js package meshcentral"
+  npm:
+    name: meshcentral
+    path: /opt/meshcentral
+
+- name: "Create installation folder"
+  file:
+    path: /opt/meshcentral/
+    owner: meshcentral
+    group: meshcentral
+    state: directory
+    recurse: yes
+    mode: '0775'
+
+- name: "Make /opt/meshcentral/meshcentral-file writable"
+  file:
+    path: /opt/meshcentral/meshcentral-files
+    owner: meshcentral
+    group: meshcentral
+    mode: 0755
+    recurse: yes
+
+- name: "Builtin Letsencrypt support"
+  file:
+    path: /opt/meshcentral/meshcentral-data/letsencrypt
+    state: directory
+    owner: meshcentral
+    group: meshcentral
+    mode: 0755
+  
+- name: "Transfer templates"
+  template:
+    src: meshcentral.service.j2
+    dest: /etc/systemd/system/meshcentral.service
+    owner: meshcentral
+    group: meshcentral
+    mode: 0755
+
+- name: "Start and enable meshcentral"
+  systemd:
+    name: meshcentral
+    state: started
+    enabled: yes
+
+
+- name: "Configure Firewall"
+  ufw:
+    rule: allow
+    proto: tcp
+    port: "{{ item }}"
+  with_items:
+    - "80"
+    - "443"
+
+# Port permissions ?
+
+
+
