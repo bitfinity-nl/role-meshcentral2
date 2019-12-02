@@ -12,7 +12,8 @@
     name: "{{ packages }}"
     update_cache: yes
     state: present
-  with_items:
+  vars:
+    packages:
     - mongodb
 
 - name: "Start and enable mongodb services"
@@ -21,4 +22,11 @@
     state: started
     enabled: yes
 
-#- name: "Configure MongoDB"
+- name: "Configure MongoDB in /opt/meshcentral/meshcentral-data/config.json"
+  replace:
+    path: /opt/meshcentral/meshcentral-data/config.json
+    regexp: '_MongoDb'
+    replace: 'MongoDb'
+  with_items:
+    - { regexp: '_MongoDb', replace: 'MongoDb' }
+    - { regexp: '_MongoDbName', replace: 'MongoDbName' }    
