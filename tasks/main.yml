@@ -92,7 +92,6 @@
     state: started
     enabled: yes
 
-
 - name: "Configure Firewall"
   ufw:
     rule: allow
@@ -102,9 +101,9 @@
     - "80"
     - "443"
 
-- name: "Import mongodb.yml"
-  import_tasks: mongodb.yml
-# Port permissions ?
+#- name: "Import mongodb.yml"
+#  import_tasks: mongodb.yml
+
 
 
 
