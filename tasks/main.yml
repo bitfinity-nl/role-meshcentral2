@@ -7,14 +7,22 @@
 # Description:
 #   Remote Management Server
 
+#- name: Enable universe repository
+#  apt_repository:
+#    repo: "{{ item }}"
+#  with_items:
+#    - "deb http://archive.ubuntu.com/ubuntu/ bionic universe"
+#    - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe"
+#    - "deb http://security.ubuntu.com/ubuntu/ bionic-security universe"
+
 - name: Enable universe repository
   apt_repository:
     repo: "{{ item }}"
   with_items:
-    - "deb http://archive.ubuntu.com/ubuntu/ bionic universe"
-    - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe"
-    - "deb http://security.ubuntu.com/ubuntu/ bionic-security universe"
-
+    - "deb http://archive.ubuntu.com/ubuntu/ focal universe"
+    - "deb http://archive.ubuntu.com/ubuntu/ focal-updates universe"
+    - "deb http://security.ubuntu.com/ubuntu/ focal-security universe"
+    
 - name: "Install packages"
   apt:
     name: "{{ packages }}"
