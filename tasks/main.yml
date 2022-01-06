@@ -61,6 +61,10 @@
     name: meshcentral
     path: /opt/meshcentral
 
+- name: "Install node.js package meshcentral"
+  npm:
+    name: ldapauth-fork
+    
 - name: "Create installation folder"
   file:
     path: /opt/meshcentral/
