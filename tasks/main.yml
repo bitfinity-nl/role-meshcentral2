@@ -64,6 +64,7 @@
 - name: "Install node.js package meshcentral"
   npm:
     name: ldapauth-fork
+    global: yes
     
 - name: "Create installation folder"
   file:
