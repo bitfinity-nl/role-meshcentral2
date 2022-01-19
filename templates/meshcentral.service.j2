@@ -4,7 +4,7 @@ Description=MeshCentral Server
 [Service]
 Type=simple
 LimitNOFILE=1000000
-ExecStart=/usr/bin/node --max-old-space-size=8192 /opt/meshcentral/node_modules/meshcentral
+ExecStart=/usr/bin/node /opt/meshcentral/node_modules/meshcentral
 WorkingDirectory=/home/meshcentral
 Environment=NODE_ENV=production
 User=root
