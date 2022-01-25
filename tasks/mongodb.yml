@@ -11,6 +11,7 @@
   apt:
     pkg:
     - mongodb
+    - mongodb-server
 
 - name: "Start and enable mongodb services"
   systemd:
