@@ -31,4 +31,5 @@ This is an example how to use the role with custom variable(s):
 Source(s)
 ----------------
 * https://www.meshcommander.com/meshcentral2
-
+* https://mangolassi.it/topic/19709/trying-to-switch-meshcentral-from-mongodb-to-nedb/2
+* https://github.com/Ylianst/MeshCentral/blob/master/sample-config-advanced.json
